@@ -1,0 +1,31 @@
+﻿
+.no-scroll {
+    overflow: hidden;
+    height: 100vh;
+}
+
+.navbar, .footer {
+    background-color: transparent;
+}
+
+.nav-link {
+    color: #FFFFFF80;
+    text-decoration: none;
+    padding: 0;
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+    .nav-link:hover {
+        color: #FFFFFF;
+    }
+
+.time {
+    margin-right: 8px;
+    pointer-events: none;
+    color: #FFFFFF80;
+}
+
+.nav-item-inline-content {
+    display: flex;
+    align-items: center;
+}

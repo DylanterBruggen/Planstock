@@ -1,0 +1,91 @@
+## Ignore Visual Studio temporary files, build results, and
+## user-specific files
+
+# Build results
+bin/
+obj/
+out/
+
+# User-specific files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# ASP.NET Scaffolding
+ScaffoldingReadMe.txt
+
+# Rider and VS Code settings (optional)
+.idea/
+.vscode/
+
+# Build logs
+*.log
+
+# Windows image file caches
+Thumbs.db
+ehthumbs.db
+
+# Folder config file
+Desktop.ini
+
+# Recycle Bin used on file shares
+$RECYCLE.BIN/
+
+# VS Backup files
+*.bak
+
+# DotCover
+*.dotCover
+
+# NCrunch
+*.ncrunch*
+.*crunch*.local.xml
+
+# Resharper
+_ReSharper*/
+*.[Rr]e[Ss]harper
+
+# DotTrace
+*.dotTrace
+
+# TFS
+$tf/
+
+# JetBrains Rider
+.idea/
+
+# Visual Studio Code
+.vscode/
+.history/
+
+# User secrets
+**/secrets.json
+
+# ASP.NET Core Runtime Binary Output
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+
+# Static web assets (from Razor pages)
+wwwroot/.scopedcss/
+
+#.vs file
+.vs/
+
+# .NET Core
+*.dbmdl
+*.pdb
+*.deps.json
+*.runtimeconfig.json
+*.runtimeconfig.dev.json
+*.dll
+*.exe
+
+.vs/
+
+# Publish output
+publish/
+/.vs/PlanStock/config/applicationhost.config
+/.vs/PlanStock/FileContentIndex/a57f1b9d-e65d-4995-af20-bb279222ef69.vsidx

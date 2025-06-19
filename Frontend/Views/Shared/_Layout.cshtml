@@ -1,0 +1,177 @@
+﻿<!DOCTYPE html>
+<html lang="nl">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>@ViewData["Title"] - PlanStock</title>
+	<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+	<link rel="stylesheet" href="~/css/Frontend.styles.css" asp-append-version="true" />
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+	@Html.Raw("<link rel=\"stylesheet\" href=\"https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css\" />")
+	@Html.Raw("<link rel=\"stylesheet\" href=\"https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/fill/style.css\" />")
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<style>
+		.profile-dropdown-button {
+			background: #EEAECA;
+			background: radial-gradient(circle, rgba(238, 174, 202, 1) 0%, rgba(148, 187, 233, 1) 100%);
+			color: #333; /* Or your theme's text color */
+			border: 1px solid #ccc;
+			border-radius: 50%; /* Makes it a circle */
+			width: 40px;
+			height: 40px;
+			display: inline-flex;
+			align-items: center;
+			justify-content: center;
+			text-decoration: none;
+			padding: 0;
+		}
+
+            .profile-dropdown-button .fa-user { /* For FontAwesome user icon */
+                font-size: 18px;
+            }
+
+			.profile-dropdown-button:hover, .profile-dropdown-button:focus {
+				background-color: #EEAECA;
+			}
+
+        .navbar .nav-right > * { /* Add some spacing between nav items */
+            margin-left: 15px;
+        }
+
+		.dropdown-menu {
+			background-color: #333; /* Dark background */
+			color: #fff; /* Light text color */
+			border: 1px solid #444; /* Border for dropdown */
+		}
+
+			.dropdown-menu .dropdown-item {
+				color: #fff; /* Light text color for items */
+			}
+
+				.dropdown-menu .dropdown-item:hover, .dropdown-menu .dropdown-item:focus {
+					background-color: #444; /* Slightly lighter background on hover */
+					color: #fff; /* Ensure text remains light */
+				}
+
+		.dropdown-divider {
+			border-color: #555; /* Divider color for dark theme */
+		}
+	</style>
+
+</head>
+<body>
+	<header>
+		@if (ViewData["ShowGradient"] == null || (bool)ViewData["ShowGradient"])
+		{
+			<div id="navbar-gradient" class="navbar-gradient"></div>
+		}
+		<nav class="navbar">
+			<div class="nav-left">
+				<a asp-area="" asp-controller="Home" asp-action="Index" class="nav-logo">PlanStock</a>
+			</div>
+			<div class="nav-right d-flex align-items-center">
+				<span class="nav-time">@DateTime.Now.ToUniversalTime().AddHours(2).ToString("h:mm tt") GMT+2</span>
+				<div>
+					<a asp-controller="Home" asp-action="Index" class="nav-link text-reset text-decoration-none">Explore Events<i class="fas fa-external-link-alt fa-xs ms-1"></i></a>
+				</div>
+
+				@if (User.Identity != null && User.Identity.IsAuthenticated)
+				{
+					<div class="dropdown">
+						<a href="#" class="profile-dropdown-button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+							<i class="fas fa-user"></i>
+						</a>
+						<ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+							<li><a class="dropdown-item" asp-controller="Account" asp-action="Account">My Account</a></li>
+							<li><a class="dropdown-item" href="#">Settings (Sample)</a></li>
+							<li><hr class="dropdown-divider"></li>
+							<li>
+								<form asp-controller="Account" asp-action="SignOut" method="get" class="d-inline">
+									@* GET for simplicity, POST is safer *@
+									<button type="submit" class="dropdown-item">Sign Out</button>
+								</form>
+							</li>
+						</ul>
+					</div>
+				}
+				else
+				{
+					<div class="nav-button-signin">
+						<a asp-controller="Account" asp-action="SignIn" class="nav-link text-reset text-decoration-none">Sign in</a>
+					</div>
+				}
+			</div>
+		</nav>
+	</header>
+
+	<div class="container">
+		<main role="main" class="">
+			@if (TempData["SuccessMessage"] != null)
+			{
+				<div class="alert alert-success" role="alert">
+					@TempData["SuccessMessage"]
+				</div>
+			}
+			@RenderBody()
+		</main>
+	</div>
+
+    <footer class="footer">
+        <div class="footer-left">
+            <span class="footer-brand">PlanStock</span>
+            <a class="footer-link" asp-controller="Events" asp-action="Index">Discover</a>
+            <a class="footer-link" asp-controller="Help" asp-action="Index">Help</a>
+        </div>
+    </footer>
+
+	<script>
+		// script for page tabs
+		// Only run tab logic on nav-links inside #account-tabs
+		const tabsContainer = document.querySelector('#Account-tabs');
+		if (tabsContainer) {
+			const tabs = tabsContainer.querySelectorAll('.nav-link');
+			const tabContents = document.querySelectorAll('.tab-content');
+
+			tabs.forEach(tab => {
+				tab.addEventListener('click', function (e) {
+					e.preventDefault();
+
+					tabs.forEach(t => t.classList.remove('active'));
+					tab.classList.add('active');
+
+					const target = tab.getAttribute('href');
+					tabContents.forEach(content => {
+						content.classList.remove('active');
+						if (content.id === target.substring(1)) {
+							content.classList.add('active');
+						}
+					});
+				});
+			});
+		}
+	</script>
+
+	<script>
+		// Define gradient options
+		const gradients = [
+			"linear-gradient(rgba(93, 225, 255, 0.2) 0%, rgba(92, 255, 144, 0.1) 50%, rgba(194, 255, 95, 0) 100%)",
+			"linear-gradient(rgba(93, 179, 255, 0.2) 0%, rgba(255, 222, 92, 0.1) 50%, rgba(255, 95, 95, 0) 100%)",
+			"linear-gradient(rgba(255, 93, 190, 0.2) 0%, rgba(149, 92, 255, 0.1) 50%, rgba(95, 255, 255, 0) 100%)"
+		];
+
+		// Randomly select a gradient
+		const randomGradient = gradients[Math.floor(Math.random() * gradients.length)];
+
+		// Apply the gradient to the navbar background
+		document.getElementById("navbar-gradient").style.background = randomGradient;
+	</script>
+
+	<script src="~/lib/jquery/dist/jquery.min.js"></script>
+	<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="~/js/site.js" asp-append-version="true"></script>
+	@await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

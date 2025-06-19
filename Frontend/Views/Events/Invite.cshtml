@@ -1,0 +1,19 @@
+﻿@model Frontend.Models.InviteGuestViewModel
+
+@{
+    ViewData["Title"] = "Gasten uitnodigen";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<form asp-action="Invite" method="post">
+    <input type="hidden" asp-for="EventId" />
+
+    <div class="form-group">
+        <label asp-for="Email"></label>
+        <input asp-for="Email" class="form-control" />
+        <span asp-validation-for="Email" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Verstuur uitnodiging</button>
+</form>
